@@ -1,0 +1,17 @@
+module not_tb;
+  logic a;
+  logic y;
+  not_gate dut(.a(a),.y(y));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,not_tb);
+    $monitor("Time=%0t | a=%b | y=%b",$time,a,y);
+    for(int i=0;i<2;i++) begin
+      
+    
+      {a}=i;
+      #10;
+    end
+    $finish;
+  end
+endmodule
