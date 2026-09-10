@@ -1,0 +1,18 @@
+module and_tb;
+  logic a;
+  logic b;
+  logic y;
+  and_gate dut(.a(a),.b(b),.y(y));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,and_tb);
+    $monitor("Time=%0t | a=%b | b=%b | y=%b",$time,a,b,y);
+    for(int i=0;i<4;i++) begin
+      
+    
+      {a,b}=i;
+      #10;
+    end
+    $finish;
+  end
+endmodule
