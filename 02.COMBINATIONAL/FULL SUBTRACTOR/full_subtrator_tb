@@ -1,0 +1,15 @@
+module tb_full_subtractor;
+  logic a,b,bin;
+  logic diff,borrow;
+  Full_Subtractor dut(.a(a),.b(b),.bin(bin),.diff(diff),.borrow(borrow));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1,tb_full_subtractor);
+    $monitor("Time=%0t a=%b b=%b bin=%b diff=%b  borrow=%b",$time,a,b,bin,diff,borrow);
+    for(int i=0;i<8;i++) begin
+      {a,b,bin}=i;
+      #10;
+    end
+    $finish;
+  end
+endmodule
