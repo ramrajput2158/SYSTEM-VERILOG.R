@@ -1,0 +1,16 @@
+module tb_half_subtractor;
+  logic a,b;
+  logic diff,borrow;
+  Half_Subtractor dut(.a(a),.b(b),.diff(diff),.borrow(borrow));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1,tb_half_subtractor);
+    $monitor("Time=%0t a=%b b=%b diff=%b borrow=%b",$time,a,b,diff,borrow);
+    for(int i=0;i<4;i++) begin
+      {a,b}=i;
+      #10;
+    end
+    $finish;
+  end
+endmodule
+    
