@@ -10,12 +10,7 @@ module tb_ripple_adder;
   initial begin
     $dumpfile("dump.vcd");
     $dumpvars(1,tb_ripple_adder);
-    $monitor("Time=%0t 
-             a=%b
-             b=%b 
-             cin=%b
-             sum=%b
-             cout=%b",$time,a,b,cin,sum,cout);
+    $monitor("Time=%0t a=%b b=%b  cin=%b sum=%b cout=%b",$time,a,b,cin,sum,cout);
     for(int i=0;i<2048;i++) begin
       {a,b,cin}=i;
       #10;
