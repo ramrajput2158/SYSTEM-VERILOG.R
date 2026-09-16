@@ -1,0 +1,27 @@
+module tb_CLA;
+  logic [3:0]A;
+  logic [3:0]B;
+  logic Cin;
+  logic [3:0]sum;
+  logic cout;
+  Carry_lookahead_adder dut(.A(A),
+                            .B(B),
+                            .Cin(Cin),
+                            .sum(sum),
+                            .cout(cout));
+  initial begin;
+    $dumpfile("dump.vcd");
+    $dumpvars(1,tb_CLA);
+    $monitor("Time=%0t A=%b B=%b Cin=%b sum=%b cout=%b",
+             $time,
+             A,
+             B,
+             Cin,
+             sum,
+             cout);
+    for(int i=0;i<512;i++) begin
+      {A,B,Cin}=i;
+      #10;
+    end
+  end
+endmodule
