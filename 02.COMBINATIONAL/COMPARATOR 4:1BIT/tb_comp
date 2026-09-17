@@ -1,0 +1,54 @@
+module tb_comparator;
+  logic [3:0]A;
+  logic [3:0]B;
+  logic AGB;
+  logic AEB;
+  logic ALB;
+  comparator_4bit dut(.A(A),
+                      .B(B),
+                      .AGB(AGB),
+                      .AEB(AEB),
+                      .ALB(ALB));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1,tb_comparator);
+    $monitor("Time =%0t A=%b B=%b AGB=%b AEB=%B ALB=%b",
+             $time,
+             A,
+             B,
+             AGB,
+             AEB,
+             ALB);
+   A = 4'b0100;
+    B = 4'b1100;
+    #10;
+     A = 4'b0110;
+    B = 4'b0100;
+    #10;
+     A = 4'b0001;
+    B = 4'b1110;
+    #10;
+     A = 4'b0111;
+    B = 4'b1000;
+    #10;
+     A = 4'b0101;
+    B = 4'b0011;
+    #10;
+     A = 4'b0001;
+    B = 4'b0100;
+    #10;
+     A = 4'b1111;
+    B = 4'b1111;
+    #10;
+     A = 4'b0000;
+    B = 4'b0000;
+    #10;
+     A = 4'b0111;
+    B = 4'b1100;
+    #10;
+     A = 4'b0101;
+    B = 4'b0001;
+    #10;
+    $finish;
+  end
+endmodule
