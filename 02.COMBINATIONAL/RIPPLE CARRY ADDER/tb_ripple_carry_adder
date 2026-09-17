@@ -1,7 +1,8 @@
 module tb_ripple_adder;
   logic [7:0]a,b;
   logic cin;
-  logic [7:0]sum,cout;
+  logic [7:0]sum;
+  logic cout;
   Ripple_adder dut(.a(a),
                    .b(b),
                    .cin(cin),
