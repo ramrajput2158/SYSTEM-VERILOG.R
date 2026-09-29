@@ -1,0 +1,20 @@
+module TB;
+  logic [3:0]D;
+  logic [1:0] encoded;
+  logic [3:0] decoded;
+  ENCODER_DECODER_4TO2 DUT(.D(D),.encoded(encoded),.decoded(decoded));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1,TB);
+    $monitor("Time=%0t,D=%b,encoded=%b,decoded=%b",$time,D,encoded,decoded);
+    D = 4'b0001;
+    #10;
+    D = 4'b0010;
+    #10;
+    D = 4'b0100;
+    #10;
+    D = 4'b1000;
+    #10;
+  $finish;
+  end
+endmodule
