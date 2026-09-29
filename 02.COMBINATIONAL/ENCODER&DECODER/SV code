@@ -1,0 +1,23 @@
+module ENCODER_DECODER_4TO2(
+  input logic [3:0]D,
+  output logic [1:0]encoded,
+  output logic [3:0]decoded);
+  always_comb begin
+    case (D) 
+      4'b0001:encoded = 2'b00;
+       4'b0010:encoded = 2'b01;
+       4'b0100:encoded = 2'b10;
+       4'b1000:encoded = 2'b11;
+      default:encoded = 2'bxx;
+    endcase
+  end
+  always_comb begin
+    case (encoded)
+      2'b00:decoded = 4'b0001;
+      2'b01:decoded = 4'b0010;
+      2'b10:decoded = 4'b0100;
+      2'b11:decoded = 4'b1000;
+      default:decoded = 4'bxxxx;
+    endcase
+  end
+endmodule
