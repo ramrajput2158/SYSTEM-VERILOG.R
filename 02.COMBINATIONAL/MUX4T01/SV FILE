@@ -1,0 +1,13 @@
+module MUX4TO1(input logic Y0,Y1,Y2,Y3,
+               input logic S0,S1,
+               output logic Y);
+  always_comb begin
+    case({S1 , S0})
+      2'b00:Y = Y0;
+      2'b01:Y = Y1;
+      2'b10:Y = Y2;
+      2'b11:Y = Y3;
+      default:Y = 1'b0;
+    endcase
+  end
+endmodule
