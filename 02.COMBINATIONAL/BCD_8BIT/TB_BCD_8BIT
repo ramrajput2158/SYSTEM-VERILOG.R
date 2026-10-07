@@ -1,0 +1,35 @@
+module tb_BCD_8bit;
+  logic [7:0]A;
+  logic [7:0]B;
+  logic [7:0]sum;
+  logic cout;
+  BCD_8bit dut (.A(A),.B(B),.sum(sum),.cout(cout));
+    initial begin
+
+        // 25 + 37 = 62
+        A = 8'h25;
+        B = 8'h37;
+        #10;
+
+        // 45 + 28 = 73
+        A = 8'h45;
+        B = 8'h28;
+        #10;
+
+        // 59 + 41 = 100
+        A = 8'h59;
+        B = 8'h41;
+        #10;
+        A = 8'h89;
+        B = 8'h75;
+        #10;
+
+        $finish;
+    end
+
+    initial begin
+        $monitor("Time=%0t A=%h B=%h SUM=%h COUT=%b",
+                  $time, A, B, sum, cout);
+    end
+
+endmodule
