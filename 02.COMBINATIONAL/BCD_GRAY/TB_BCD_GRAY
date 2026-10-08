@@ -1,0 +1,35 @@
+module TB_BCD_TO_GRAY;
+  logic [7:0]binary;
+  logic [7:0]gray;
+  BCD_GRAY dut (.binary(binary),.gray(gray));
+  initial begin
+    $monitor("Time=%0t binary=%b gray=%b",$time,binary,gray);
+    $dumpfile("dump.vcd");
+    $dumpvars(1,TB_BCD_TO_GRAY);
+    binary = 8'b00000000;
+    #10;
+    binary = 8'b01010101;
+    #10;
+    binary = 8'b01100110;
+    #10;
+    binary = 8'b01110111;
+    #10;
+    binary = 8'b11001100;
+    #10;
+    binary = 8'b11101110;
+    #10;
+    binary = 8'b01100111;
+    #10;
+    binary = 8'b11100011;
+    #10;
+    binary = 8'b11110011;
+    #10;
+    binary = 8'b00001111;
+    #10;
+    binary = 8'b11111111;
+    #10;
+    binary = 8'b01011111;
+    #10;
+  $finish;
+  end
+endmodule
