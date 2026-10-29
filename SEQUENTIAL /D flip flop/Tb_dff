@@ -1,0 +1,41 @@
+module tb_dff;
+  logic clk;
+  logic rst;
+  logic d;
+  logic q;
+  d_ff dut(.clk(clk),.rst(rst),.d(d),.q(q));
+  initial clk=0;
+  always #5 clk= ~clk;
+  initial begin
+    $monitor("Time=%0t | clk = %b | rst = %b | d = %b | q = %b ",
+             $time,
+             clk,
+             rst,
+             d,
+             q);
+    $dumpfile("dump.vcd");
+    $dumpvars(1,tb_dff);
+    rst = 0;
+    d = 0;
+    #2;
+    if(q !== 0)
+      $error("Reset Failed");
+    rst = 1;
+    d = 1;
+    #2 d = 1;
+    #5;
+    if(q !== 1)
+      $error("Failed to store 1");
+    #1 d = 0;
+    #2;
+    if(q !== 1)
+      $error("q changed without a rising edge");
+    #6;
+    if (q !== 0)
+      $error("failed to store 0");
+     $display("Test completed");
+  $finish;
+  end
+
+endmodule
+    
