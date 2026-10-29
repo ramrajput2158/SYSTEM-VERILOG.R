@@ -1,0 +1,43 @@
+// Code your testbench here
+// or browse Examples
+module SR_tb;
+  SR_if bus();
+  SR_FF dut(bus);
+  initial bus.clk = 0;
+  always #5 bus.clk = ~bus.clk;
+  task automatic check_q( input logic expected);
+    begin
+     @(posedge bus.clk)
+     #1;
+     if( bus.q !== expected)
+       $error("Fail: expected = %b | actual = %b ",expected,bus.q);
+     else
+       $display("Pass : expected = %b | actual = %b",expected,bus.q);
+    end
+  endtask
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,SR_tb);
+    bus.s = 0;
+    bus.r = 1;
+    check_q(0);
+    @(negedge bus.clk);
+    bus.s = 1;
+    bus.r = 0;
+    check_q(1);
+    @(negedge bus.clk);
+    bus.s = 0;
+    bus.r = 0;
+    check_q(1);
+    @(negedge bus.clk)
+    bus.s = 0;
+    bus.r = 1;
+    check_q(0);
+    @(negedge bus.clk);
+    bus.s = 1;
+    bus.r = 0;
+    check_q(0);
+    $display("All sr test completed");
+    $finish;
+  end
+endmodule
