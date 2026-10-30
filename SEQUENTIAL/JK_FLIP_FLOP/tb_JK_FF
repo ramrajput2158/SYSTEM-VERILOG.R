@@ -1,0 +1,52 @@
+module tb_jk_ff;
+  jk_ff_if bus();
+  jk_ff dut(bus);
+  initial bus.clk = 0;
+  always #5 bus.clk = ~bus.clk;
+  task automatic check_apply(
+    input logic j_in,
+    input logic k_in,
+    input logic expected);
+    begin
+      @(negedge bus.clk);
+      bus.j = j_in;
+      bus.k = k_in;
+      @(posedge bus.clk);
+      #1;
+      if(bus.q !== expected)
+        $error("Fail: J = %b K = %b expected = %b actual = %b",
+               j_in,k_in,expected,bus.q);
+      else
+        $display("Pass : j = %b K = %b Q  = %b",
+                 j_in,k_in,bus.q);
+    end
+  endtask
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,tb_jk_ff);
+    bus.rst = 0;
+    bus.j = 0;
+    bus.k = 0;
+    #7;
+    bus.rst = 1;
+    // Test 1 Hold 
+    check_apply(0,0,1);
+    //Test 2 Reset
+    check_apply(0,1,0);
+    //Test 3 Reset
+    check_apply(0,1,1);
+    //Test 4 Toggle
+    check_apply(1,1,0);
+    //Test 5 SET
+    check_apply(1,0,1);
+    //Test 6 Toggle
+    check_apply(1,1,1);
+    
+    $display("All JK Flip-Flop tests completed");
+
+        $finish;
+
+    end
+
+endmodule
+      
