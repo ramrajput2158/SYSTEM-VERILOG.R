@@ -1,0 +1,42 @@
+// Code your testbench here
+// or browse Examples
+module tb_t_ff;
+  t_ff_if bus();
+  t_ff dut(bus);
+  initial bus.clk = 1'b0;
+  always #5 bus.clk = !bus.clk;
+  task automatic apply(
+      input logic t_in,
+      input logic expected); begin
+      @(negedge bus.clk);
+      bus.t = t_in;
+      #7;
+      @(posedge bus.clk);
+      #1;
+      if(bus.q !== expected)
+        $error("Fail : T = %b | expected = %b | actual = %b ",
+               t_in , expected, bus.q);
+      else 
+        $display("Pass : T = %b | Q = %b ", t_in, bus.q);
+    end
+  endtask
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,tb_t_ff);
+    bus.rst = 0;
+    bus.t  = 0;
+    #7;
+    bus.rst = 1;
+    //Test 1 q = 0
+    apply(0,0);
+    //Test 2 q (o to 1)
+    apply(1,1);
+    //Test 3; q = 1 hold
+    apply(0,1);
+    //Test 4 
+    apply(1,0);
+    apply(1,1);
+    $finish;
+  end
+endmodule
+      
